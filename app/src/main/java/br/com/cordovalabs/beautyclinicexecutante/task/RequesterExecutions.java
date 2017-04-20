@@ -1,6 +1,7 @@
 package br.com.cordovalabs.beautyclinicexecutante.task;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,7 +38,7 @@ public class RequesterExecutions extends RequesterPattern {
 
     private static RequesterExecutions request = new RequesterExecutions();
 
-    public static void request(final Context context, final RecyclerView recyclerView) {
+    public static void request(final Context context, final RecyclerView recyclerView, final SwipeRefreshLayout refreshLayout) {
 
         JsonArrayRequest jsonArrayRequest = null;
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
@@ -56,19 +57,12 @@ public class RequesterExecutions extends RequesterPattern {
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         recyclerView.setAdapter(adapter);
+
+                        if (refreshLayout != null) {
+                            refreshLayout.setRefreshing(false);
+                        }
+
 //                        recyclerView.setLayoutAnimation(AnimationUtils.slideInLeft(rv.getContext()));
-
-
-//                            try {
-//                                Log.d("NEWUSER", response.toString());
-////                                pb.setVisibility(View.INVISIBLE);
-////                                Beneficiary beneficiary = new Gson().fromJson(response.getJSONObject("beneficiary").toString(), Beneficiary.class);
-////                                SharedBeneficiaryLogin.getInstance(root.getContext()).save(beneficiary);
-////
-////                                root.getContext().startActivity(new Intent(root.getContext(), MainActivity.class));
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
                     }
                 }, new Response.ErrorListener() {
 
