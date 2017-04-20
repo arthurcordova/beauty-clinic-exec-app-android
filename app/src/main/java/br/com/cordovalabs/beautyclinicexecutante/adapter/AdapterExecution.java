@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
 import br.com.cordovalabs.beautyclinicexecutante.model.Execution;
+import br.com.cordovalabs.beautyclinicexecutante.util.Months;
 
 /**
  * Created by acstapassoli on 23/01/2017.
@@ -33,9 +34,22 @@ public class AdapterExecution extends RecyclerView.Adapter<AdapterExecution.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Execution model = mList.get(position);
-        holder.tvProduct.setText(model.getProduto());
-        holder.tvClient.setText(model.getCliente());
-        holder.tvDateTime.setText(model.getData().replaceAll("-","/") + " " + model.getHorario());
+        if (model != null) {
+            holder.tvProduct.setText(model.getProduto());
+            holder.tvClient.setText(model.getCliente());
+
+            String day = model.getData().split("-")[2];
+            String hour = model.getHorario().substring(0,5);
+            String month = Months.values()[Integer.valueOf(model.getData().split("-")[1]) - 1].toString();
+
+            holder.tvDay.setText(day);
+            holder.tvHour.setText(hour);
+            holder.tvMonth.setText(month);
+        }
+
+
+
+//        holder.tvDateTime.setText(model.getData().replaceAll("-","/") + " " + model.getHorario());
     }
 
     @Override
@@ -53,14 +67,18 @@ public class AdapterExecution extends RecyclerView.Adapter<AdapterExecution.View
         final View mView;
         final TextView tvProduct;
         final TextView tvClient;
-        final TextView tvDateTime;
+        final TextView tvDay;
+        final TextView tvMonth;
+        final TextView tvHour;
 
         ViewHolder(View view) {
             super(view);
             mView = view;
             tvProduct = (TextView) view.findViewById(R.id.tv_product);
             tvClient = (TextView) view.findViewById(R.id.tv_client);
-            tvDateTime = (TextView) view.findViewById(R.id.tv_date_time);
+            tvDay = (TextView) view.findViewById(R.id.tv_day);
+            tvMonth = (TextView) view.findViewById(R.id.tv_month);
+            tvHour = (TextView) view.findViewById(R.id.tv_hour);
         }
 
         void clearAnimation() {

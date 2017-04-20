@@ -6,12 +6,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
 import br.com.cordovalabs.beautyclinicexecutante.fragment.ExecutionFragment;
-import br.com.cordovalabs.beautyclinicexecutante.task.RequesterExecutions;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.navigation_executions:
+                    mTextMessage.setText(R.string.title_executions);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
+//                case R.id.navigation_dashboard:
+//                    mTextMessage.setText(R.string.title_dashboard);
+//                    return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
                     return true;
