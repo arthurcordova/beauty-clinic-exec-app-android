@@ -10,24 +10,22 @@ import android.view.View;
 import android.widget.TextView;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
+import br.com.cordovalabs.beautyclinicexecutante.fragment.ExecutionFragment;
 import br.com.cordovalabs.beautyclinicexecutante.task.RequesterExecutions;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
-    private View mButton;
     private RecyclerView mRecyclerView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mTextMessage.setText(R.string.title_home);
-
-
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
@@ -47,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mTextMessage = (TextView) findViewById(R.id.message);
-//        mButton =  findViewById(R.id.button);
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_executions);
-        RequesterExecutions.request(this, mRecyclerView);
+//
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.content, new ExecutionFragment()).commit();
 
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
