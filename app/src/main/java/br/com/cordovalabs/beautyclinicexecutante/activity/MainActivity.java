@@ -1,4 +1,4 @@
-package br.com.cordovalabs.beautyclinicexecutante;
+package br.com.cordovalabs.beautyclinicexecutante.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,6 +6,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import br.com.cordovalabs.beautyclinicexecutante.R;
 
 public class MainActivity extends AppCompatActivity {
 
