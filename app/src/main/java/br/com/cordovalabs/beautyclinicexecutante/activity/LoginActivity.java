@@ -6,10 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
+import br.com.cordovalabs.beautyclinicexecutante.task.RequesterLogin;
 
 public class LoginActivity extends AppCompatActivity {
+
+    TextView mTvLogin;
+    TextView mTvPwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +22,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
+        mTvLogin = (TextView) findViewById(R.id.login);
+        mTvPwd = (TextView) findViewById(R.id.pwd);
+
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+
+                RequesterLogin.request(findViewById(R.id.sign_in_button), mTvLogin.getText().toString(), mTvPwd.getText().toString());
+
             }
         });
 
