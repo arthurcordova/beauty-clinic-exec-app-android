@@ -68,18 +68,34 @@
 
         </android.support.design.widget.TextInputLayout>
 
-
-        <Button
-            android:id="@+id/sign_in_button"
-            style="?android:textAppearanceSmall"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/button_selector"
-            android:clickable="false"
-            android:text="Entrar"
-            android:textColor="#ffffff"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/sign_in_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/button_selector"
+                android:clickable="false"
+                android:text="Entrar"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:visibility="invisible"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 

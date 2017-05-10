@@ -3,6 +3,12 @@ package br.com.cordovalabs.beautyclinicexecutante.task;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,7 +37,10 @@ public class RequesterLogin extends RequesterPattern {
     private static RequesterLogin request = new RequesterLogin();
     public static String PARAM_USER = "model_user";
 
-    public static void request(final View root, String login, String pwd) {
+    public static void request(final View root, final ProgressBar progressBar, String login, String pwd) {
+
+        progressBar.setVisibility(View.VISIBLE);
+        root.setVisibility(View.INVISIBLE);
 
         JsonObjectRequest jsonObjReq = null;
         jsonObjReq = new JsonObjectRequest(Request.Method.GET,
@@ -42,6 +51,9 @@ public class RequesterLogin extends RequesterPattern {
                     public void onResponse(JSONObject response) {
                         Log.d("Login", response.toString());
                         User user = new Gson().fromJson(response.toString(), User.class);
+
+                        progressBar.setVisibility(View.INVISIBLE);
+//                        root.setVisibility(View.INVISIBLE);
 
                         Intent it = new Intent(root.getContext(), MainActivity.class);
                         it.putExtra(PARAM_USER, user);
@@ -54,6 +66,9 @@ public class RequesterLogin extends RequesterPattern {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("NEWUSER", "REQUEST ERROR");
+                progressBar.setVisibility(View.INVISIBLE);
+                root.setVisibility(View.VISIBLE);
+
             }
         }) {
 

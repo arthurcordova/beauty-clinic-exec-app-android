@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
@@ -15,6 +16,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextView mTvLogin;
     TextView mTvPwd;
+    ProgressBar mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +26,13 @@ public class LoginActivity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
         mTvLogin = (TextView) findViewById(R.id.login);
         mTvPwd = (TextView) findViewById(R.id.pwd);
+        mProgress = (ProgressBar) findViewById(R.id.progressBar);
 
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                RequesterLogin.request(findViewById(R.id.sign_in_button), mTvLogin.getText().toString(), mTvPwd.getText().toString());
+                RequesterLogin.request(findViewById(R.id.sign_in_button), mProgress, mTvLogin.getText().toString(), mTvPwd.getText().toString());
 
             }
         });
