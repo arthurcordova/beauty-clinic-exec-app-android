@@ -5,7 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,16 +12,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,20 +38,24 @@ public class RequesterExecutions extends RequesterPattern {
 
     public static void request(final Context context, final RecyclerView recyclerView, final SwipeRefreshLayout refreshLayout) {
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.get(Calendar.DAY_OF_MONTH);
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+
         JsonArrayRequest jsonArrayRequest = null;
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
-                request.url.concat("/getexecucoes/19-04-2017/4"), null,
+//                request.url.concat("/getexecucoes/19-04-2017/4"), null,
+                request.url.concat("/getexecucoes/" + date + "/4"), null,
                 new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.d("NEWUSER", response.toString());
                         List<Execution> list = (ArrayList<Execution>) new Gson().fromJson(response.toString(),
                                 new TypeToken<ArrayList<Execution>>() {
                                 }.getType());
 
                         AdapterExecution adapter = new AdapterExecution(list);
-
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         recyclerView.setAdapter(adapter);
@@ -71,7 +73,6 @@ public class RequesterExecutions extends RequesterPattern {
                 Log.e("NEWUSER", "REQUEST ERROR");
             }
         }) {
-
             /**
              * Passing some request headers
              * */
@@ -81,10 +82,7 @@ public class RequesterExecutions extends RequesterPattern {
                 headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
-
-
         };
-
 
         RequestQueue queue = Requester.getInstance(context).getRequestQueue();
         queue.add(jsonArrayRequest);
