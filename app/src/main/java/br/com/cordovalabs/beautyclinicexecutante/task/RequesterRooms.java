@@ -17,45 +17,37 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import br.com.cordovalabs.beautyclinicexecutante.adapter.AdapterExecution;
+import br.com.cordovalabs.beautyclinicexecutante.adapter.AdapterRoom;
 import br.com.cordovalabs.beautyclinicexecutante.dto.Execution;
+import br.com.cordovalabs.beautyclinicexecutante.dto.Room;
 
 /**
  * Created by acstapassoli on 30/11/2016.
  */
 
-public class RequesterExecutions extends RequesterPattern {
+public class RequesterRooms extends RequesterPattern {
 
-    private static RequesterExecutions request = new RequesterExecutions();
+    private static RequesterRooms request = new RequesterRooms();
 
     public static void request(final Context context, final RecyclerView recyclerView, final SwipeRefreshLayout refreshLayout) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.get(Calendar.DAY_OF_MONTH);
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String date = df.format(Calendar.getInstance().getTime());
-
         JsonArrayRequest jsonArrayRequest = null;
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
-//                request.url.concat("/getexecucoes/19-04-2017/4"), null,
-                request.url.concat("/getexecucoes/" + date + "/4"), null,
+                request.url.concat("/listarsalas/4"), null,
                 new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        List<Execution> list = (ArrayList<Execution>) new Gson().fromJson(response.toString(),
-                                new TypeToken<ArrayList<Execution>>() {
+                        List<Room> list = (ArrayList<Room>) new Gson().fromJson(response.toString(),
+                                new TypeToken<ArrayList<Room>>() {
                                 }.getType());
 
-                        AdapterExecution adapter = new AdapterExecution(list);
+                        AdapterRoom adapter = new AdapterRoom(list);
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         recyclerView.setAdapter(adapter);
@@ -63,7 +55,6 @@ public class RequesterExecutions extends RequesterPattern {
                         if (refreshLayout != null) {
                             refreshLayout.setRefreshing(false);
                         }
-//                        recyclerView.setLayoutAnimation(AnimationUtils.slideInLeft(rv.getContext()));
                     }
                 }, new Response.ErrorListener() {
 

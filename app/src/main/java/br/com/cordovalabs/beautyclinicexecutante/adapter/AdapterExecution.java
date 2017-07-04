@@ -1,7 +1,6 @@
 package br.com.cordovalabs.beautyclinicexecutante.adapter;
 
 import android.content.DialogInterface;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +11,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
-import br.com.cordovalabs.beautyclinicexecutante.model.Execution;
-import br.com.cordovalabs.beautyclinicexecutante.model.User;
+import br.com.cordovalabs.beautyclinicexecutante.dto.Execution;
+import br.com.cordovalabs.beautyclinicexecutante.dto.User;
 import br.com.cordovalabs.beautyclinicexecutante.task.RequesterStartExecution;
 import br.com.cordovalabs.beautyclinicexecutante.util.Months;
 

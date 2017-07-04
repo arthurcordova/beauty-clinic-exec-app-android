@@ -1,4 +1,4 @@
-package br.com.cordovalabs.beautyclinicexecutante.model;
+package br.com.cordovalabs.beautyclinicexecutante.dto;
 
 import java.io.Serializable;
 

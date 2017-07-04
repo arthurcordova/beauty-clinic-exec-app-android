@@ -22,8 +22,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
         mTvLogin = (TextView) findViewById(R.id.login);
         mTvPwd = (TextView) findViewById(R.id.pwd);
         mProgress = (ProgressBar) findViewById(R.id.progressBar);

@@ -3,11 +3,6 @@ package br.com.cordovalabs.beautyclinicexecutante.task;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
@@ -18,15 +13,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.cordovalabs.beautyclinicexecutante.activity.LoginActivity;
 import br.com.cordovalabs.beautyclinicexecutante.activity.MainActivity;
-import br.com.cordovalabs.beautyclinicexecutante.model.User;
+import br.com.cordovalabs.beautyclinicexecutante.dto.User;
 
 /**
  * Created by acstapassoli on 30/11/2016.
@@ -58,7 +51,6 @@ public class RequesterLogin extends RequesterPattern {
                         Intent it = new Intent(root.getContext(), MainActivity.class);
                         it.putExtra(PARAM_USER, user);
                         root.getContext().startActivity(it);
-
 
                     }
                 }, new Response.ErrorListener() {
