@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_executions:
+                case R.id.navigation_rooms:
                     return true;
                 case R.id.navigation_notifications:
                     return true;

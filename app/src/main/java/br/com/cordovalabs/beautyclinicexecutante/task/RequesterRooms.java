@@ -38,7 +38,7 @@ public class RequesterRooms extends RequesterPattern {
     public static void request(final Context context, final RecyclerView recyclerView, final SwipeRefreshLayout refreshLayout) {
         JsonArrayRequest jsonArrayRequest = null;
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
-                request.url.concat("/listarsalas/4"), null,
+                request.url.concat("/listarsalas/3"), null,
                 new Response.Listener<JSONArray>() {
 
                     @Override

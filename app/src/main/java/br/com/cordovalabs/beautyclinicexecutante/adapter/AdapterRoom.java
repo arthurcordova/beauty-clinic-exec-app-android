@@ -1,6 +1,7 @@
 package br.com.cordovalabs.beautyclinicexecutante.adapter;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
+import br.com.cordovalabs.beautyclinicexecutante.activity.ExecutionActivity;
 import br.com.cordovalabs.beautyclinicexecutante.dto.Execution;
 import br.com.cordovalabs.beautyclinicexecutante.dto.Room;
 import br.com.cordovalabs.beautyclinicexecutante.dto.User;
@@ -46,22 +48,9 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-//                    builder.setTitle("Procedimento");
-//                    builder.setMessage("Deseja iniciar o procedimento? \n ID: "+model.getIdAgenda());
-//                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            User user = new User();
-//                            user.setCodigo(93);
-//                            RequesterStartExecution.request(holder.tvStatus.getContext(), user, model.getIdAgenda(), holder.tvStatus);
-//                        }
-//                    });
-//                    builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                        }
-//                    });
-//                    AlertDialog dialog = builder.create();
-//                    dialog.show();
+                    Intent it = new Intent(view.getContext(), ExecutionActivity.class);
+                    it.putExtra("Room", model);
+                    view.getContext().startActivity(it);
                 }
             });
         }

@@ -4,6 +4,7 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="title_executions">Execuções</string>
+    <string name="title_rooms">Salas</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notificações</string>
 
