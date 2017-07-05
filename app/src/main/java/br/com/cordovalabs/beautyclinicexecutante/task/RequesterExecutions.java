@@ -46,7 +46,7 @@ public class RequesterExecutions extends RequesterPattern {
         JsonArrayRequest jsonArrayRequest = null;
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
 //                request.url.concat("/getexecucoes/19-04-2017/4"), null,
-                request.url.concat("/getexecucoes/" + date + "/4"), null,
+                request.url.concat("/getexecucoes/93/3/A"), null,
                 new Response.Listener<JSONArray>() {
 
                     @Override

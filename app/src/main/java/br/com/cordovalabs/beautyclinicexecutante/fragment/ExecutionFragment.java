@@ -1,14 +1,25 @@
 package br.com.cordovalabs.beautyclinicexecutante.fragment;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
 import br.com.cordovalabs.beautyclinicexecutante.task.RequesterExecutions;
@@ -68,18 +79,28 @@ public class ExecutionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_execution, container, false);
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_executions);
-        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
-                RequesterExecutions.request(view.getContext(), recyclerView, refreshLayout);
-            }
-        });
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager_container);
+        viewPager.setAdapter(sectionsPagerAdapter);
 
-        RequesterExecutions.request(view.getContext(), recyclerView, null);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        changeTabsFont(tabLayout);
+
+//        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_executions);
+//        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+
+//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//
+//                RequesterExecutions.request(view.getContext(), recyclerView, refreshLayout);
+//            }
+//        });
+//
+//        RequesterExecutions.request(view.getContext(), recyclerView, null);
 
         return view;
     }
@@ -123,4 +144,93 @@ public class ExecutionFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return PlaceholderFragment.newInstance(position + 1);
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Em aberto";
+                case 1:
+                    return "Finalizadas";
+            }
+            return null;
+        }
+    }
+
+    public static class PlaceholderFragment extends Fragment {
+
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
+        }
+
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = null;
+//            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+//                rootView = inflater.inflate(R.layout.fragment_beneficiaries, container, false);
+//            } else {
+//                rootView = inflater.inflate(R.layout.fragment_beneficiaries_dependent, container, false);
+//
+//                ArrayList<String> list = new ArrayList<>();
+//                list.add("João da Silva");
+//                list.add("Victor da Silva");
+//                list.add("Hanry da Silva");
+//
+//                RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+//                AdapterBeneficiariesDependent adapter = new AdapterBeneficiariesDependent(list);
+//                recyclerView.setAdapter(adapter);
+//                recyclerView.setItemAnimator(new DefaultItemAnimator());
+//
+//
+//
+//            }
+            return rootView;
+        }
+    }
+
+    private void changeTabsFont(TabLayout tabLayout) {
+
+        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int i = 0; i < tabChildsCount; i++) {
+                View tabViewChild = vgTab.getChildAt(i);
+                if (tabViewChild instanceof TextView) {
+                    ((TextView) tabViewChild).setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+                    ((TextView) tabViewChild).setAllCaps(false);
+                    ((TextView) tabViewChild).setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                }
+            }
+        }
+    }
+
 }

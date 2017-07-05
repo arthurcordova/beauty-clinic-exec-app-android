@@ -1,8 +1,6 @@
 package br.com.cordovalabs.beautyclinicexecutante.adapter;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +10,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
-import br.com.cordovalabs.beautyclinicexecutante.activity.ExecutionActivity;
-import br.com.cordovalabs.beautyclinicexecutante.dto.Execution;
+import br.com.cordovalabs.beautyclinicexecutante.activity.SchedulingActivity;
 import br.com.cordovalabs.beautyclinicexecutante.dto.Room;
-import br.com.cordovalabs.beautyclinicexecutante.dto.User;
-import br.com.cordovalabs.beautyclinicexecutante.task.RequesterStartExecution;
-import br.com.cordovalabs.beautyclinicexecutante.util.Months;
 
 /**
  * Created by acstapassoli on 23/01/2017.
@@ -48,7 +42,7 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.ViewHolder> {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent it = new Intent(view.getContext(), ExecutionActivity.class);
+                    Intent it = new Intent(view.getContext(), SchedulingActivity.class);
                     it.putExtra("Room", model);
                     view.getContext().startActivity(it);
                 }

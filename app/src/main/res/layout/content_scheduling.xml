@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.com.cordovalabs.beautyclinicexecutante.activity.ExecutionActivity"
-    tools:showIn="@layout/activity_execution">
+    tools:context="br.com.cordovalabs.beautyclinicexecutante.activity.SchedulingActivity"
+    tools:showIn="@layout/activity_scheduling">
 
 
     <RelativeLayout
@@ -33,12 +33,12 @@
             android:id="@+id/tv_null_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="77dp"
-            android:paddingEnd="77dp"
             android:layout_marginTop="92dp"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="Não foi encontrado agendamento para a sala selecionada"
+            android:paddingEnd="77dp"
+            android:paddingStart="77dp"
+            android:text="@string/title_blank_list"
             android:textColor="#33000000"
             android:textSize="16sp" />
 

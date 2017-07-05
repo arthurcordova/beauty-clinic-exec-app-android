@@ -25,7 +25,7 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ExecutionActivity"
+            android:name=".activity.SchedulingActivity"
             android:label="@string/title_activity_execution"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
