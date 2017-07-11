@@ -1,7 +1,9 @@
 package br.com.cordovalabs.beautyclinicexecutante.task;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -27,20 +29,18 @@ public class RequesterStartExecution extends RequesterPattern {
 
     private static RequesterStartExecution request = new RequesterStartExecution();
 
-    public static void request(final Context context, final User user, final Long idAgenda, final TextView tvStatus) {
+    public static void request(final Context context, final User user, final String idAgenda, final View view) {
 
         JsonObjectRequest jsonObjectRequest = null;
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                request.url.concat("/iniciarexecucao/"+idAgenda+"/"+user.getCodigo()), null,
+                request.url.concat("/iniciarexecucao/" + idAgenda + "/" + user.getCodigo()), null,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            tvStatus.setText(response.getString("mensagem"));
-                        } catch (JSONException e) {
 
-                        }
+                        Snackbar.make(view, "Procedimento inciado com sucesso!", Snackbar.LENGTH_SHORT).show();
+
                     }
                 }, new Response.ErrorListener() {
 

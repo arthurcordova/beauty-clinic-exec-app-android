@@ -7,10 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
 import br.com.cordovalabs.beautyclinicexecutante.dto.Room;
 import br.com.cordovalabs.beautyclinicexecutante.task.RequesterExecutions;
+import br.com.cordovalabs.beautyclinicexecutante.task.RequesterScheduling;
 
 public class SchedulingActivity extends AppCompatActivity {
 
@@ -29,23 +36,33 @@ public class SchedulingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.get(Calendar.DAY_OF_MONTH);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String date = df.format(Calendar.getInstance().getTime());
+        TextView tvdate = (TextView) findViewById(R.id.tv_date);
+        tvdate.setText(date);
+
         if (roomDto != null) {
+            final String codeSala = roomDto.getCodSala().toString();
             getSupportActionBar().setTitle(roomDto.getDescricao());
+
+            final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_executions);
+            final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl);
+            final View tvNull = findViewById(R.id.tv_null_list);
+            final View imgNull = findViewById(R.id.img_null_list);
+
+            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+
+                    RequesterScheduling.request(SchedulingActivity.this, recyclerView, refreshLayout, codeSala, imgNull, tvNull);
+                }
+            });
+
+            RequesterScheduling.request(this, recyclerView, refreshLayout, codeSala, imgNull, tvNull);
         }
-
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_executions);
-        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl);
-
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                RequesterExecutions.request(SchedulingActivity.this, recyclerView, refreshLayout);
-            }
-        });
-
-        RequesterExecutions.request(this, recyclerView, null);
-
     }
 
     @Override
