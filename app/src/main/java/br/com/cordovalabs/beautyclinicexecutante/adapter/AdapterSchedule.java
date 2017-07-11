@@ -14,6 +14,7 @@ import br.com.cordovalabs.beautyclinicexecutante.R;
 import br.com.cordovalabs.beautyclinicexecutante.dto.Schedule;
 import br.com.cordovalabs.beautyclinicexecutante.dto.User;
 import br.com.cordovalabs.beautyclinicexecutante.task.RequesterStartExecution;
+import br.com.cordovalabs.beautyclinicexecutante.util.SessionManager;
 
 /**
  * Created by acstapassoli on 23/01/2017.
@@ -50,8 +51,8 @@ public class AdapterSchedule extends RecyclerView.Adapter<AdapterSchedule.ViewHo
                     builder.setMessage("Deseja iniciar o procedimento? \n ID: " + model.getIdAgenda());
                     builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            User user = new User();
-                            user.setCodigo(93);
+                            SessionManager sm = new SessionManager(holder.mView.getContext());
+                            User user = sm.getSessionUser();
                             RequesterStartExecution.request(holder.mView.getContext(), user, model.getIdAgenda(), holder.mView);
                         }
                     });

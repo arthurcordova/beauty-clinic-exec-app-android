@@ -5,11 +5,15 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
+import br.com.cordovalabs.beautyclinicexecutante.dto.User;
 import br.com.cordovalabs.beautyclinicexecutante.fragment.ExecutionFragment;
 import br.com.cordovalabs.beautyclinicexecutante.fragment.RoomFragment;
+import br.com.cordovalabs.beautyclinicexecutante.task.RequesterLogin;
+import br.com.cordovalabs.beautyclinicexecutante.util.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_rooms);
+
+        User user = null;
+        try {
+            user = (User)getIntent().getSerializableExtra(RequesterLogin.PARAM_USER);
+            SessionManager sm = new SessionManager(this);
+            sm.createSessionLogin(user);
+        } catch (Exception e){
+            Log.e("USERERROR", "Nenhum usuário logado encontrado.");
+        }
+
     }
 
     private void inflateLayout(Fragment fragment){

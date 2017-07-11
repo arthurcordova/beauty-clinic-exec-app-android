@@ -50,7 +50,7 @@ public class RequesterScheduling extends RequesterPattern {
 
         JsonArrayRequest jsonArrayRequest = null;
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
-                request.url.concat("/getagendamentos/"+"05-07-2017"+"/3/"+roomId), null,
+                request.url.concat("/getagendamentos/"+date+"/3/"+roomId), null,
                 new Response.Listener<JSONArray>() {
 
                     @Override
