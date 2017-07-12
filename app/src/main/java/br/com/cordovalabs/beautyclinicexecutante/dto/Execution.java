@@ -1,6 +1,10 @@
 package br.com.cordovalabs.beautyclinicexecutante.dto;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by acstapassoli on 20/04/17.

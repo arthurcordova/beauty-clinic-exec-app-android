@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
@@ -38,9 +42,9 @@ public class AdapterExecution extends RecyclerView.Adapter<AdapterExecution.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Execution model = mList.get(position);
+
         if (model != null) {
-            holder.tvProduct.setText(model.getCodigo());
-            holder.tvClient.setText(model.getData());
+            holder.tvClient.setText(model.getCodigo());
 
             String day = model.getData().split("-")[2];
             String hour = model.getHrInicio().substring(0,5);
