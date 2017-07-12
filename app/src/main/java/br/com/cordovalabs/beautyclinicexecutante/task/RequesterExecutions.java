@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -41,7 +42,8 @@ public class RequesterExecutions extends RequesterPattern {
     public static void request(final Context context,
                                final RecyclerView recyclerView,
                                final SwipeRefreshLayout refreshLayout,
-                               final boolean isPending) {
+                               final boolean isPending,
+                               final View view) {
 
         JsonArrayRequest jsonArrayRequest = null;
         String status = isPending ? "A" : "F";
@@ -58,7 +60,7 @@ public class RequesterExecutions extends RequesterPattern {
                                 new TypeToken<ArrayList<Execution>>() {
                                 }.getType());
 
-                        AdapterExecution adapter = new AdapterExecution(list);
+                        AdapterExecution adapter = new AdapterExecution(list, view);
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         recyclerView.setAdapter(adapter);

@@ -8,22 +8,16 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
 import br.com.cordovalabs.beautyclinicexecutante.task.RequesterExecutions;
@@ -95,20 +89,20 @@ public class ExecutionFragment extends Fragment {
                     @Override
                     public void onRefresh() {
 
-                        RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, !status);
+                        RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, !status, view);
                     }
                 });
-                RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, !b);
+                RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, !b, view);
             }
         });
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
-                RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, !switchStatus.isChecked());
+                RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, !switchStatus.isChecked(), view);
             }
         });
-        RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, !switchStatus.isChecked());
+        RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, !switchStatus.isChecked(), view);
 
 
 
@@ -212,31 +206,31 @@ public class ExecutionFragment extends Fragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_pending_execution, container, false);
-            final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_executions);
-            final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.srl);
-
-            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-
-                refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-
-                        RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, true);
-                    }
-                });
-                RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, true);
-
-            } else {
-
-                refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-
-                        RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, false);
-                    }
-                });
-                RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, false);
-            }
+//            final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_executions);
+//            final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.srl);
+//
+//            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+//
+//                refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//                    @Override
+//                    public void onRefresh() {
+//
+//                        RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, true);
+//                    }
+//                });
+//                RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, true);
+//
+//            } else {
+//
+//                refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//                    @Override
+//                    public void onRefresh() {
+//
+//                        RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, false);
+//                    }
+//                });
+//                RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, false);
+//            }
             return rootView;
         }
 

@@ -17,6 +17,7 @@ import java.util.List;
 import br.com.cordovalabs.beautyclinicexecutante.R;
 import br.com.cordovalabs.beautyclinicexecutante.dto.Execution;
 import br.com.cordovalabs.beautyclinicexecutante.dto.User;
+import br.com.cordovalabs.beautyclinicexecutante.task.RequesterEndExecution;
 import br.com.cordovalabs.beautyclinicexecutante.task.RequesterStartExecution;
 import br.com.cordovalabs.beautyclinicexecutante.util.Months;
 
@@ -27,9 +28,11 @@ import br.com.cordovalabs.beautyclinicexecutante.util.Months;
 public class AdapterExecution extends RecyclerView.Adapter<AdapterExecution.ViewHolder> {
 
     private List<Execution> mList;
+    private View mRootView;
 
-    public AdapterExecution(List<Execution> items) {
+    public AdapterExecution(List<Execution> items, View view) {
         mList = items;
+        mRootView = view;
     }
 
     @Override
@@ -54,27 +57,27 @@ public class AdapterExecution extends RecyclerView.Adapter<AdapterExecution.View
             holder.tvHour.setText(hour);
             holder.tvMonth.setText(month);
 
-//            holder.mView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-//                    builder.setTitle("Procedimento");
-//                    builder.setMessage("Deseja iniciar o procedimento? \n ID: "+model.getIdAgenda());
-//                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            User user = new User();
-//                            user.setCodigo(93);
-////                            RequesterStartExecution.request(holder.tvStatus.getContext(), user, model.getIdAgenda(), holder.tvStatus);
-//                        }
-//                    });
-//                    builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                        }
-//                    });
-//                    AlertDialog dialog = builder.create();
-//                    dialog.show();
-//                }
-//            });
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final View v = view;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("Finalizar");
+                    builder.setMessage("Deseja finalizar a execução? \n ID: "+model.getCodigo());
+                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            RequesterEndExecution.request(v.getContext(), mRootView, model.getCodigo());
+                        }
+                    });
+                    builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
         }
 //        holder.tvDateTime.setText(model.getData().replaceAll("-","/") + " " + model.getHorario());
     }
