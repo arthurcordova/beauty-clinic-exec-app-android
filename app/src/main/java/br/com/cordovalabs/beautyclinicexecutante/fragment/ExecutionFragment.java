@@ -18,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -81,30 +83,58 @@ public class ExecutionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_execution, container, false);
+        final Switch switchStatus = (Switch) view.findViewById(R.id.switch_status);
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_executions);
+        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
 
-        setupViewPager(view);
+        switchStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                final boolean status = b;
+                refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, !status);
+                    }
+                });
+                RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, !b);
+            }
+        });
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, !switchStatus.isChecked());
+            }
+        });
+        RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, !switchStatus.isChecked());
+
+
+
+//        setupViewPager(view);
         return view;
     }
 
-    private void setupViewPager(View view){
-
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager_container);
-        viewPager.setAdapter(sectionsPagerAdapter);
-
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        changeTabsFont(tabLayout);
-
-        ViewPager pager = (ViewPager) view.findViewById(R.id.view_pager_container);
-        pager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-    }
+//    private void setupViewPager(View view){
+//
+//        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+//
+//        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager_container);
+//        viewPager.setAdapter(sectionsPagerAdapter);
+//
+//        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+//        tabLayout.setupWithViewPager(viewPager);
+//        changeTabsFont(tabLayout);
+//
+//        ViewPager pager = (ViewPager) view.findViewById(R.id.view_pager_container);
+//        pager.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
