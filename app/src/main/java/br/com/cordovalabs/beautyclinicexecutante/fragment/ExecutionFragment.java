@@ -15,11 +15,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.cordovalabs.beautyclinicexecutante.R;
 import br.com.cordovalabs.beautyclinicexecutante.task.RequesterExecutions;
@@ -80,6 +82,12 @@ public class ExecutionFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_execution, container, false);
 
+        setupViewPager(view);
+        return view;
+    }
+
+    private void setupViewPager(View view){
+
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager_container);
@@ -89,20 +97,13 @@ public class ExecutionFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         changeTabsFont(tabLayout);
 
-//        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_executions);
-//        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
-
-//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//                RequesterExecutions.request(view.getContext(), recyclerView, refreshLayout);
-//            }
-//        });
-//
-//        RequesterExecutions.request(view.getContext(), recyclerView, null);
-
-        return view;
+        ViewPager pager = (ViewPager) view.findViewById(R.id.view_pager_container);
+        pager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -127,19 +128,8 @@ public class ExecutionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -191,27 +181,38 @@ public class ExecutionFragment extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = null;
-//            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-//                rootView = inflater.inflate(R.layout.fragment_beneficiaries, container, false);
-//            } else {
-//                rootView = inflater.inflate(R.layout.fragment_beneficiaries_dependent, container, false);
-//
-//                ArrayList<String> list = new ArrayList<>();
-//                list.add("João da Silva");
-//                list.add("Victor da Silva");
-//                list.add("Hanry da Silva");
-//
-//                RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-//                AdapterBeneficiariesDependent adapter = new AdapterBeneficiariesDependent(list);
-//                recyclerView.setAdapter(adapter);
-//                recyclerView.setItemAnimator(new DefaultItemAnimator());
-//
-//
-//
-//            }
+            View rootView = inflater.inflate(R.layout.fragment_pending_execution, container, false);
+            final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_executions);
+            final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.srl);
+
+            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+
+                refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, true);
+                    }
+                });
+                RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, true);
+
+            } else {
+
+                refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+
+                        RequesterExecutions.request(recyclerView.getContext(), recyclerView, refreshLayout, false);
+                    }
+                });
+                RequesterExecutions.request(recyclerView.getContext(), recyclerView, null, false);
+            }
             return rootView;
+        }
+
+        @Override
+        public void onAttach(Context context) {
+            super.onAttach(context);
         }
     }
 

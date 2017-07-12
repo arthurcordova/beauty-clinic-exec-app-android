@@ -8,11 +8,20 @@ import java.io.Serializable;
 
 public class Execution implements Serializable {
 
+    private String codigo;
     private String data;
-    private String produto;
-    private String cliente;
-    private Long idAgenda;
-    private String horario;
+    private String hrInicio;
+    private String hrFim;
+    private Long total;
+    private Long fixo;
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
     public String getData() {
         return data;
@@ -22,35 +31,35 @@ public class Execution implements Serializable {
         this.data = data;
     }
 
-    public String getProduto() {
-        return produto;
+    public String getHrInicio() {
+        return hrInicio;
     }
 
-    public void setProduto(String produto) {
-        this.produto = produto;
+    public void setHrInicio(String hrInicio) {
+        this.hrInicio = hrInicio;
     }
 
-    public String getCliente() {
-        return cliente;
+    public String getHrFim() {
+        return hrFim;
     }
 
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
+    public void setHrFim(String hrFim) {
+        this.hrFim = hrFim;
     }
 
-    public Long getIdAgenda() {
-        return idAgenda;
+    public Long getTotal() {
+        return total;
     }
 
-    public void setIdAgenda(Long idAgenda) {
-        this.idAgenda = idAgenda;
+    public void setTotal(Long total) {
+        this.total = total;
     }
 
-    public String getHorario() {
-        return horario;
+    public Long getFixo() {
+        return fixo;
     }
 
-    public void setHorario(String horario) {
-        this.horario = horario;
+    public void setFixo(Long fixo) {
+        this.fixo = fixo;
     }
 }

@@ -27,6 +27,8 @@ import java.util.Map;
 
 import br.com.cordovalabs.beautyclinicexecutante.adapter.AdapterExecution;
 import br.com.cordovalabs.beautyclinicexecutante.dto.Execution;
+import br.com.cordovalabs.beautyclinicexecutante.dto.User;
+import br.com.cordovalabs.beautyclinicexecutante.util.SessionManager;
 
 /**
  * Created by acstapassoli on 30/11/2016.
@@ -36,17 +38,18 @@ public class RequesterExecutions extends RequesterPattern {
 
     private static RequesterExecutions request = new RequesterExecutions();
 
-    public static void request(final Context context, final RecyclerView recyclerView, final SwipeRefreshLayout refreshLayout) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.get(Calendar.DAY_OF_MONTH);
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String date = df.format(Calendar.getInstance().getTime());
+    public static void request(final Context context,
+                               final RecyclerView recyclerView,
+                               final SwipeRefreshLayout refreshLayout,
+                               final boolean isPending) {
 
         JsonArrayRequest jsonArrayRequest = null;
+        String status = isPending ? "A" : "F";
+        SessionManager sm = new SessionManager(context);
+        User user = sm.getSessionUser();
+
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
-//                request.url.concat("/getexecucoes/19-04-2017/4"), null,
-                request.url.concat("/getexecucoes/93/3/A"), null,
+                request.url.concat("/getexecucoes/"+user.getCodigo()+"/3/" + status), null,
                 new Response.Listener<JSONArray>() {
 
                     @Override

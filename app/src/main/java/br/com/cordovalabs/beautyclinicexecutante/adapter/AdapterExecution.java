@@ -39,38 +39,38 @@ public class AdapterExecution extends RecyclerView.Adapter<AdapterExecution.View
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Execution model = mList.get(position);
         if (model != null) {
-            holder.tvProduct.setText(model.getProduto());
-            holder.tvClient.setText(model.getCliente());
+            holder.tvProduct.setText(model.getCodigo());
+            holder.tvClient.setText(model.getData());
 
             String day = model.getData().split("-")[2];
-            String hour = model.getHorario().substring(0,5);
+            String hour = model.getHrInicio().substring(0,5);
             String month = Months.values()[Integer.valueOf(model.getData().split("-")[1]) - 1].toString();
 
             holder.tvDay.setText(day);
             holder.tvHour.setText(hour);
             holder.tvMonth.setText(month);
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setTitle("Procedimento");
-                    builder.setMessage("Deseja iniciar o procedimento? \n ID: "+model.getIdAgenda());
-                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            User user = new User();
-                            user.setCodigo(93);
-//                            RequesterStartExecution.request(holder.tvStatus.getContext(), user, model.getIdAgenda(), holder.tvStatus);
-                        }
-                    });
-                    builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            });
+//            holder.mView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+//                    builder.setTitle("Procedimento");
+//                    builder.setMessage("Deseja iniciar o procedimento? \n ID: "+model.getIdAgenda());
+//                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            User user = new User();
+//                            user.setCodigo(93);
+////                            RequesterStartExecution.request(holder.tvStatus.getContext(), user, model.getIdAgenda(), holder.tvStatus);
+//                        }
+//                    });
+//                    builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                        }
+//                    });
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                }
+//            });
         }
 //        holder.tvDateTime.setText(model.getData().replaceAll("-","/") + " " + model.getHorario());
     }

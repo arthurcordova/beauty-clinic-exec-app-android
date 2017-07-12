@@ -22,12 +22,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            ExecutionFragment executionFragment = new ExecutionFragment();
             switch (item.getItemId()) {
                 case R.id.navigation_rooms:
                     inflateLayout(new RoomFragment());
                     return true;
                 case R.id.navigation_notifications:
-                    inflateLayout(new ExecutionFragment());
+                    inflateLayout(executionFragment);
                     return true;
             }
             return false;
